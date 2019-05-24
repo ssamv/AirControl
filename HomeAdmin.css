@@ -1,0 +1,89 @@
+header{
+    font-family: arial;
+    background-color: black;
+    color: white;
+}
+
+.sala{
+    display : inline-flex;
+    margin-top: 10px;
+    margin-bottom: 20px;
+    padding: 0%;
+}
+
+.centrar{
+    display: flex;
+    text-align:center;
+    justify-content: center;
+    align-items: center;
+}
+
+.piso{
+    margin-top: 20px;
+    display : inline-flex;
+    border-radius: 10px;
+    border: 2px solid #757575;
+}
+
+
+.overlay {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: rgba(0, 0, 0, 0.7);
+    transition: opacity 500ms;
+    visibility: hidden;
+    opacity: 0;
+}
+
+.overlay:target {
+    visibility: visible;
+    opacity: 1;
+}
+
+#popupBody{
+width: 46%;
+padding: 2%;
+border-radius: 15px;
+box-shadow: 0 0 5px #CCC;
+background: #FFF;
+position: relative;
+margin: 20% auto;
+transition: all 5s ease-in-out;
+}
+
+#cerrar{
+position: absolute;
+top: 20px;
+right: 30px;
+font-size: 30px;
+font-weight: bold;
+text-decoration: none;
+color: #F00;
+transition: all 200ms;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
