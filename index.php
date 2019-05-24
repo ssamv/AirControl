@@ -12,14 +12,14 @@ else{
     <meta charset="utf-8">
     <title>Login</title>
     <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
-    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="style.css"><!--Agregue esto-->
   </head>
 
   <body>
       <header>
       </header>
-
-    <h1>Login</h1>
+    <h1>Air Control</h1> <!--Agregue esto-->
+    <h2>Login</h2>
       <form action="autenticacion.php" method="post">
         <input type="text" name="usuario" id="usaurio" placeholder= "Enter your user">
         <input type="password" name="password" id="password" placeholder="Enter your password">
@@ -28,4 +28,3 @@ else{
 
   </body>
 </html>
-
