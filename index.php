@@ -1,7 +1,7 @@
 <?php
 session_start();
 if(isset($_SESSION['user_inside'])){
-  echo "<script language='javascript'>window.location='HomeAdmin.php'</script>";
+  echo "<script language='javascript'>window.location='/administrador/HomeAdmin.php'</script>";
 }
 else{
 }
@@ -12,7 +12,7 @@ else{
     <meta charset="utf-8">
     <title>Login</title>
     <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
-    <link rel="stylesheet" href="style.css"><!--Agregue esto-->
+    <link rel="stylesheet" href="index.css"><!--Agregue esto-->
   </head>
 
   <body>
@@ -20,7 +20,7 @@ else{
       </header>
     <h1>Air Control</h1> <!--Agregue esto-->
     <h2>Login</h2>
-      <form action="autenticacion.php" method="post">
+      <form action="/public/autenticacion.php" method="post">
         <input type="text" name="usuario" id="usaurio" placeholder= "Enter your user">
         <input type="password" name="password" id="password" placeholder="Enter your password">
         <input type="submit" value="Send">
