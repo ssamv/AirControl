@@ -2,8 +2,10 @@
 session_start();
 require("../public/database.php");
 
-if(isset($_POST['ver_dispositivo'])){
+if(isset($_POST['ver_dispositivos'])){
   $idsala=$_POST['id_sala'];
+  $consulta_dispositivos= "SELECT * FROM Dispositivo WHERE id_sala ='$idsala'";
+  $dispositivos= mysqli_query($link,$consulta_dispositivos) or die('Consulta fallida: ' . mysqli_error());
   echo "<script language='javascript'>window.location='#popup'</script>";
 }
 ?>
@@ -28,19 +30,18 @@ if(isset($_POST['ver_dispositivo'])){
   
   <body>
     <header class="row">
-      <div class="div-header centrar col-xs-3">
+      <div class="centrar-v col-xs-7">
         <img src="../img/usuario.png" text-align="center" width="75px"  alt="No se pudo cargar la imagen">
-      </div>
-        <div class="div-header centrar col-xs-4">
         <?php echo $_SESSION['user_inside']; ?>   
       </div>
-      <div class="div-header centrar col-xs-4">
+
+      <div class="col-xs-5" width="75px" style="text-align:right;">
         <a href="../public/cerrar_sesion.php" class="btn btn-light">Cerrar Sesion</a> 
       </div>
     </header>
 
     
-<section class="row">
+<section class="centrar row">
 
   <div class="centrar col-xs-11">
   <h1> Dispositivos de Aire Acondicionado </h1> 
@@ -53,7 +54,8 @@ while ($fila_e=mysqli_fetch_array($edificios)){
 ?>
 
   <article class="centrar col-xs-11">
-  <h2> <?php echo "Torre "; echo $fila_e['descripcion']; ?> </h2>
+   <h2> <?php echo "Torre "; echo $fila_e['descripcion']; ?> </h2>
+   <div class="row">
 
 <?php
 $idedificio= $fila_e['id_edif'];
@@ -62,10 +64,11 @@ $pisos= mysqli_query($link,$consulta) or die('Consulta fallida: ' . mysqli_error
 while ($fila=mysqli_fetch_array($pisos)){
 ?>
 
-  <div class="piso centrar col-xs-11 col-md-6 col-lg-4">
-    <div class="centrar col-xs-12">
-      <h3> <?php echo $fila['descripcion']; ?> </h3>
-    </div>
+  <div class="piso centrar col-xs-12 col-md-6 col-lg-4">
+    <div class="row">
+      <div class="centrar col-xs-12">
+        <h3>Piso N°<?php echo $fila['descripcion']; ?> </h3>
+      </div>
 
 <?php
 $idpiso= $fila['id_piso'];
@@ -74,27 +77,39 @@ $salas= mysqli_query($link,$consulta_salas) or die('Consulta fallida: ' . mysqli
 while ($fila_s=mysqli_fetch_array($salas)){
 ?>
 
-  <div class="sala col-xs-3">
+  <div class="sala centrar col-xs-3">
     <form method="post" action="HomeAdmin.php">
-      <input type="hidden" name="id_sala" value="<?php echo $fila_s['descripcion']; ?>">
-      <input type="submit" class="btn btn-primary" name="ver_dispositivo" value="<?php echo $fila_s['descripcion']; ?>"> 
+      <input type="hidden" name="id_sala" value="<?php echo $fila_s['id_sala']; ?>">
+      <input type="submit" class="btn btn-primary" name="ver_dispositivos" value="<?php echo $fila_s['descripcion']; ?>"> 
     </form> 
   </div>
 
 <?php } ?>
-</div>
+    </div>
+  </div>
 <?php } ?>
-</article>
+    </div>
+  </article>
 <?php } ?>
 
-<div id="popup" class="overlay">
-   <div id="popupBody">
-       <h2>Título de la ventana</h2>
-       <a id="cerrar" href="#">&times;</a>
-       <div class="popupContent">
-       <?php echo $idsala;?>
-       </div>
-   </div>
+  <div id="popup" class="overlay">
+    <div id="popupBody">
+      <h2><?php echo $idsala;?></h2>
+      <a id="cerrar" href="#">&times;</a>
+      <div class="row">
+
+<?php
+while ($fila_d=mysqli_fetch_array($dispositivos)){
+?>
+
+    <div class="caja-dispositivo col-xs-6">
+        <h5 text-align="center"><?php echo $fila_d['Nro_serie'];?></h5>
+    </div>
+
+<?php } ?>
+
+      </div>
+    </div>
   </div>
 
     </section>
