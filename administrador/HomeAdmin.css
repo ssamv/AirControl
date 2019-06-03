@@ -4,6 +4,10 @@ header{
     color: white;
 }
 
+.div-header{
+    display : inline-flex;
+}
+
 .sala{
     display : inline-flex;
     margin-top: 10px;
@@ -11,8 +15,11 @@ header{
     padding: 0%;
 }
 
+.edificio{
+    display : flex;
+}
+
 .centrar{
-    display: flex;
     text-align:center;
     justify-content: center;
     align-items: center;
@@ -64,6 +71,7 @@ text-decoration: none;
 color: #F00;
 transition: all 200ms;
 }
+
 
 
 

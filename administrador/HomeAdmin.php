@@ -1,6 +1,6 @@
 <?php
 session_start();
-require("database.php");
+require("../public/database.php");
 
 if(isset($_POST['ver_dispositivo'])){
   $idsala=$_POST['id_sala'];
@@ -20,32 +20,31 @@ if(isset($_POST['ver_dispositivo'])){
 	<!--ARCHIVOS CSS-------------------------------------------------------------------------------------------->
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
         <link rel="stylesheet" href="HomeAdmin.css">
-        <link rel="stylesheet" href="flexboxgrid.min.css">
+        <link rel="stylesheet" href="../public/flexboxgrid.min.css">
 
 	<!--ARCHIVOS JS--------------------------------------------------------------------------------------------->
         <script type="text/javascript" src="HomeAdmin.js"></script>
-        <script type='text/javascript' src="//ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
   </head>
-
+  
   <body>
     <header class="row">
-      <div class="col-xs-10">
-        <img src="usuario.png" text-align="center" width="75px"  alt="No se pudo cargar la imagen">
+      <div class="div-header centrar col-xs-3">
+        <img src="../img/usuario.png" text-align="center" width="75px"  alt="No se pudo cargar la imagen">
+      </div>
+        <div class="div-header centrar col-xs-4">
         <?php echo $_SESSION['user_inside']; ?>   
       </div>
-      <div class="center col-xs-2">
-        <a href="cerrar_sesion.php" class="btn btn-light">Cerrar Sesion</a> 
+      <div class="div-header centrar col-xs-4">
+        <a href="../public/cerrar_sesion.php" class="btn btn-light">Cerrar Sesion</a> 
       </div>
     </header>
 
     
 <section class="row">
 
-  <div style="padding-left: 5%;">
+  <div class="centrar col-xs-11">
   <h1> Dispositivos de Aire Acondicionado </h1> 
   </div>
-
-<!--Mostrar edificios del recinto--------------------------------------------------------------------->
 
 <?php
 $consultaE= "SELECT * FROM Edificio";
@@ -53,10 +52,8 @@ $edificios= mysqli_query($link,$consultaE) or die('Consulta fallida: ' . mysqli_
 while ($fila_e=mysqli_fetch_array($edificios)){
 ?>
 
-  <article class="centrar col-xs-12">
+  <article class="centrar col-xs-11">
   <h2> <?php echo "Torre "; echo $fila_e['descripcion']; ?> </h2>
-
-<!--Mostrar pisos de cada edificio--------------------------------------------------------------------->
 
 <?php
 $idedificio= $fila_e['id_edif'];
@@ -65,13 +62,10 @@ $pisos= mysqli_query($link,$consulta) or die('Consulta fallida: ' . mysqli_error
 while ($fila=mysqli_fetch_array($pisos)){
 ?>
 
-  <div class="piso centrar col-xs-12 col-sm-6 col-lg-4">
-  <div class="row">
+  <div class="piso centrar col-xs-11 col-md-6 col-lg-4">
     <div class="centrar col-xs-12">
       <h3> <?php echo $fila['descripcion']; ?> </h3>
     </div>
-
-<!--Mostrar salas de cada piso--------------------------------------------------------------------->
 
 <?php
 $idpiso= $fila['id_piso'];
@@ -89,19 +83,18 @@ while ($fila_s=mysqli_fetch_array($salas)){
 
 <?php } ?>
 </div>
-</div>
 <?php } ?>
 </article>
 <?php } ?>
 
-  <div id="popup" class="overlay">
-    <div id="popupBody">
-        <h2><?php echo $idsala;?></h2>
-        <a id="cerrar" href="#">&times;</a>
-        <div class="popupContent">
-        
-        </div>
-    </div>
+<div id="popup" class="overlay">
+   <div id="popupBody">
+       <h2>Título de la ventana</h2>
+       <a id="cerrar" href="#">&times;</a>
+       <div class="popupContent">
+       <?php echo $idsala;?>
+       </div>
+   </div>
   </div>
 
     </section>
