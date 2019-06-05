@@ -4,6 +4,7 @@ require("../public/database.php");
 
 if(isset($_POST['ver_dispositivos'])){
   $idsala=$_POST['id_sala'];
+  $desc_sala=$_POST['sala'];
   $consulta_dispositivos= "SELECT * FROM Dispositivo WHERE id_sala ='$idsala'";
   $dispositivos= mysqli_query($link,$consulta_dispositivos) or die('Consulta fallida: ' . mysqli_error());
   echo "<script language='javascript'>window.location='#popup'</script>";
@@ -26,6 +27,7 @@ if(isset($_POST['ver_dispositivos'])){
 
 	<!--ARCHIVOS JS--------------------------------------------------------------------------------------------->
         <script type="text/javascript" src="HomeAdmin.js"></script>
+        <script src="../public/jquery-3.4.1.min.js"></script>
   </head>
   
   <body>
@@ -78,10 +80,11 @@ while ($fila_s=mysqli_fetch_array($salas)){
 ?>
 
   <div class="sala centrar col-xs-3">
-    <form method="post" action="HomeAdmin.php">
+    <form method="post" id="datos-sala">
       <input type="hidden" name="id_sala" value="<?php echo $fila_s['id_sala']; ?>">
+      <input type="hidden" name="sala" value="<?php echo $fila_s['descripcion']; ?>">
       <input type="submit" class="btn btn-primary" name="ver_dispositivos" value="<?php echo $fila_s['descripcion']; ?>"> 
-    </form> 
+    </form>
   </div>
 
 <?php } ?>
@@ -93,17 +96,36 @@ while ($fila_s=mysqli_fetch_array($salas)){
 <?php } ?>
 
   <div id="popup" class="overlay">
-    <div id="popupBody">
-      <h2><?php echo $idsala;?></h2>
+    <div class="col-xs-10 col-sm-8 col-md-6 col-lg-4" id="popupBody">
+      <h2>Sala: <?php echo $desc_sala;?></h2>
       <a id="cerrar" href="#">&times;</a>
       <div class="row">
 
 <?php
 while ($fila_d=mysqli_fetch_array($dispositivos)){
 ?>
-
-    <div class="caja-dispositivo col-xs-6">
-        <h5 text-align="center"><?php echo $fila_d['Nro_serie'];?></h5>
+    
+    <div class="centrar diflex row">
+      <div class="caja-dispositivo centrar diflex col-xs-12">
+          <h5 text-align="center">N° de Serie del Dispositivo: <?php echo $fila_d['Nro_serie'];?></h5>
+      </div>
+      <form method="post" id="dispositivo">
+        <div class="diflex centrar col-xs-6">
+          <input type="submit" class="btn btn-primary" name="boton-mode" value="Mode"> 
+        </div>
+        <div class="diflex centrar col-xs-6">
+          <input type="submit" class="btn btn-primary" name="boton-fan" value="Fan"> 
+        </div>
+        <div class="diflex centrar col-xs-6">
+          <input type="submit" class="btn btn-primary" name="boton-sleep" value="Sleep"> 
+        </div>
+        <div class="diflex centrar col-xs-6">
+          <input type="submit" class="btn btn-primary" name="boton-turbo" value="Turbo"> 
+        </div>
+        <div class="diflex centrar col-xs-12">
+          <input type="submit" class="btn btn-danger" name="boton-estado" value="ON/OFF"> 
+        </div>         
+      </form>
     </div>
 
 <?php } ?>
