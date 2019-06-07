@@ -4,8 +4,8 @@ header{
     color: white;
 }
 
-.div-header{
-    display : inline-flex;
+.diflex{
+display : inline-flex;
 }
 
 .sala{
@@ -16,7 +16,8 @@ header{
 }
 
 .edificio{
-    display : flex;
+    margin-top: 50px;
+    margin-bottom: 25px;
 }
 
 .centrar{
@@ -25,6 +26,22 @@ header{
     align-items: center;
 }
 
+.centrar-h{
+    text-align:center;
+}
+
+.centrar-v{
+    justify-content: center;
+    align-items: center;
+}
+
+.topright {
+    position: absolute;
+    top: 8px;
+    right: 16px;
+    font-size: 18px;
+  }
+  
 .piso{
     margin-top: 20px;
     display : inline-flex;
@@ -32,6 +49,12 @@ header{
     border: 2px solid #757575;
 }
 
+.caja-dispositivo{
+    height: 200px;
+    padding: 7px;
+    border-radius: 10px;
+    border: 2px solid #757575;
+}
 
 .overlay {
     position: fixed;
@@ -51,25 +74,24 @@ header{
 }
 
 #popupBody{
-width: 46%;
 padding: 2%;
 border-radius: 15px;
 box-shadow: 0 0 5px #CCC;
 background: #FFF;
 position: relative;
-margin: 20% auto;
-transition: all 5s ease-in-out;
+margin: 5% auto;
+transition: all 3s ease-in-out;
 }
 
-#cerrar{
-position: absolute;
-top: 20px;
-right: 30px;
-font-size: 30px;
-font-weight: bold;
-text-decoration: none;
-color: #F00;
-transition: all 200ms;
+.boton-cerrar{
+    float: right;
+}
+
+footer{
+    width:100px;
+    font-family: arial;
+    background-color: black;
+    color: white;
 }
 
 
