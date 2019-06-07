@@ -16,7 +16,8 @@ display : inline-flex;
 }
 
 .edificio{
-    display : flex;
+    margin-top: 50px;
+    margin-bottom: 25px;
 }
 
 .centrar{
@@ -34,6 +35,13 @@ display : inline-flex;
     align-items: center;
 }
 
+.topright {
+    position: absolute;
+    top: 8px;
+    right: 16px;
+    font-size: 18px;
+  }
+  
 .piso{
     margin-top: 20px;
     display : inline-flex;
@@ -71,19 +79,19 @@ border-radius: 15px;
 box-shadow: 0 0 5px #CCC;
 background: #FFF;
 position: relative;
-margin: 20% auto;
+margin: 5% auto;
 transition: all 3s ease-in-out;
 }
 
-#cerrar{
-position: absolute;
-top: 20px;
-right: 30px;
-font-size: 30px;
-font-weight: bold;
-text-decoration: none;
-color: #F00;
-transition: all 200ms;
+.boton-cerrar{
+    float: right;
+}
+
+footer{
+    width:100px;
+    font-family: arial;
+    background-color: black;
+    color: white;
 }
 
 
