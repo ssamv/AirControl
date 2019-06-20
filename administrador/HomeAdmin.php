@@ -1,18 +1,6 @@
 <?php
 session_start();
 require("../public/database.php");
-
-if(is_null($_POST['id_sala'])){}
-else{
-  $idsala=$_POST['id_sala'];
-  $desc_sala=$_POST['sala'];
-  $e_dis=$_POST['e_dis'];
-  $p_dis=$_POST['p_dis'];
-  $consulta_dispositivos= "SELECT * FROM Dispositivo WHERE id_sala ='$idsala'";
-  $dispositivos= mysqli_query($link,$consulta_dispositivos) or die('Consulta fallida: ' . mysqli_error());
-  unset($_POST['id_sala']);
-  echo "<script language='javascript'>window.location='#popup'</script>";
-}
 ?>
 
 <!DOCTYPE html>
@@ -35,8 +23,8 @@ else{
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 
   </head>
-  
-  <body>
+
+<body>
   <!--HEADER--------------------------------------------------------------------------------------------->
     <header class="row">
       <div class="centrar-v col-xs-7">
@@ -113,22 +101,33 @@ while ($fila_s=mysqli_fetch_array($salas)){
 ?>
 
   <div class="sala centrar col-xs-3">
-    <form method="post" id="datos-sala">
-      <input type="hidden" name="id_sala" value="<?php echo $fila_s['id_sala']; ?>">
-      <input type="hidden" name="sala" value="<?php echo $fila_s['descripcion']; ?>">
-      <input type="hidden" name="e_dis" value="<?php echo $fila_e['descripcion']; ?>">
-      <input type="hidden" name="p_dis" value="<?php echo $fila['descripcion']; ?>">
-        <input type="submit" class="btn btn-outline-info" id="ver_dispositivos" name="ver_dispositivos" 
-              value="<?php while ($dis=mysqli_fetch_array($dispositivo)){ 
-                            echo $fila_s['descripcion']; echo "&nbsp;"; echo $temp_sala;?>°C">
-      <input type="hidden" id="estado_dis" name="estado_dis" value="<?php echo $dis['Estado']; ?>">
+    <form id="datos-sala<?php echo $fila_s['id_sala']; ?>" method="POST">
+
+      <input type="hidden" id="id_sala" name="id_sala" value="<?php echo $fila_s['id_sala']; ?>">
+      <input type="hidden" id="sala" name="sala" value="<?php echo $fila_s['descripcion']; ?>">
+      <input type="hidden" id="temp_sala" name="temp_sala" value="<?php echo $temp_sala ?>">
+      <input type="hidden" id="e_dis" name="e_dis" value="<?php echo $fila_e['descripcion']; ?>">
+      <input type="hidden" id="p_dis" name="p_dis" value="<?php echo $fila['descripcion']; ?>">
+
+      <input type="button" id="boton_mostrar_disp<?php echo $fila_s['id_sala']; ?>" class="btn btn-outline-info"
+      value="<?php echo $fila_s['descripcion']; echo "&nbsp;"; echo $temp_sala;?>°C" onclick="mostrar_disp(this.form);">
+      
+      <?php while ($dis=mysqli_fetch_array($dispositivo)){?>
+      <input type="hidden" id="estado_dis<?php echo $fila_s['id_sala']; ?>" name="estado_dis" value="<?php echo $dis['Estado']; ?>">
+      <?php } ?>
+
     </form>
   </div>
   
 <?php 
-}
-echo "<script>mostrar_estado_salas();</script>";
-} ?>
+$id_s=$fila_s['id_sala'];
+$estado_dis="estado_dis$id_s";
+$boton_sala="#boton_mostrar_disp$id_s";
+echo "<script>mostrar_estado_salas('".$estado_dis."','".$boton_sala."');</script>";
+} 
+
+?>
+
     </div>
   </div>
 <?php } ?>
@@ -136,121 +135,8 @@ echo "<script>mostrar_estado_salas();</script>";
   </article>
 <?php } ?>
 
-<!--DISPOSITIVO--------------------------------------------------------------------------------------------->
-
-  <div id="popup" class="overlay">
-    <div class="col-xs-10 col-sm-8 col-md-6 col-lg-4" id="popupBody">
-      <div class="row">
-
-      <div class="col-xs-12">
-      <span class="btn btn-danger topright" onclick="actualizar_disp();">&times;</span>
-      <p><h6>Torre <?php echo $e_dis; ?>/ Piso N°<?php echo $p_dis; ?></h6></p>
-      <h2>Sala: <?php echo $desc_sala;?></h2>
-      </div>
-
-<?php
-while ($fila_d=mysqli_fetch_array($dispositivos)){
-?>
-
-      <div id="pantalla-disp" class="caja-dispositivo centrar diflex col-xs-12">
-        <div class="row">
-          <div class="centrar col-xs-12">
-            <a>N° de Serie del Dispositivo: <?php echo $fila_d['Nro_serie'];?></a>
-          </div>
-          <div class="centrar col-xs-12">
-            <a>Temperatura del Dispositivo: </a>
-            <a id="text_temp"></a>
-            <a>°C</a>
-          </div>
-          <div class="centrar col-xs-12">
-            <input type="range" id="temp" value="<?php echo $fila_d['T_aire']; ?>" min="0" max="28" 
-                   autocomplete="off" step="1" onmousemove="input_temp()">
-          </div>
-        </div>
-      </div>
-
-      <form method="post" id="dispositivo">
-      
-        <input type="hidden" id="id" value="<?php echo $fila_d['Nro_serie']; ?>">
-        <input type="hidden" id="in_mode" value="<?php echo $fila_d['Mode']; ?>">
-        <input type="hidden" id="in_fan" value="<?php echo $fila_d['Fan']; ?>">
-
-        <div class="diflex centrar col-xs-6">
-          <div class="col-auto my-1">
-            <label class="mr-sm-2">Modo Temperatura:</label>
-            <select class="custom-select mr-sm-2" id="mode">
-              <option value="manual">Manual</option>
-              <option value="automatico">Automatico</option>
-            </select>
-          </div>
-        </div>
-
-        <div class="diflex centrar col-xs-6">
-          <div class="col-auto my-1">
-            <label class="mr-sm-2">Velocidad Ventilador:</label>
-            <select class="custom-select mr-sm-2" id="fan">
-              <option value="alto">Alta</option>
-              <option value="medio">Media</option>
-              <option value="bajo">Baja</option>
-            </select>
-          </div>
-        </div>
-
-        <div id="botones" class="btn-group-toggle" data-toggle="buttons">
-          <label id="boton-sleep" class="btn btn-outline-primary">
-            <input type="checkbox" id="sleep" value="<?php echo $fila_d['Sleep']; ?>" autocomplete="off">Sleep
-          </label>
-          <label id="boton-turbo" class="btn btn-outline-primary">
-            <input type="checkbox" id="turbo" value="<?php echo $fila_d['Turbo']; ?>" autocomplete="off">Turbo
-          </label>
-          <label id="boton-estado" class="btn btn-outline-danger">
-            <input type="checkbox" id="estado" value="<?php echo $fila_d['Estado']; ?>" autocomplete="off">ON/OFF
-          </label>  
-        </div>      
-      
-      </form>
-    </div>
-
-<?php 
-} 
-echo "<script>mostrar_estados_dis();</script>";
-?>
-
-<!--FUNCION EVENTOS CLICKS EN BOTONES--------------------------------------------------------------------------------------------->
-<script>
-$(document).ready(function(){
-    $("#boton-sleep").click(function(){
-      if(document.getElementById("sleep").value == "0"){
-      document.getElementById("sleep").value = "1";
-      }
-      else{
-      document.getElementById("sleep").value = "0";
-      }
-    });
-
-    $("#boton-turbo").click(function(){
-      if(document.getElementById("turbo").value == "0"){
-      document.getElementById("turbo").value = "1";
-      }
-      else{
-      document.getElementById("turbo").value = "0";
-      }
-    });
-
-    $("#boton-estado").click(function(){
-      if(document.getElementById("estado").value == "0"){
-      document.getElementById("estado").value = "1";
-      }
-      else{
-      document.getElementById("estado").value = "0";
-      }
-    });
-});
-</script>
-
-      </div>
-    </div>
-  </div>
+<!--POPUP DISPOSITIVO--------------------------------------------------------------------------------------------->
+  <div id="popup" class="overlay">       </div>
 
     </section>
 	
@@ -258,5 +144,9 @@ $(document).ready(function(){
        Equipo Dinamufin
 	  </footer>
  </body>	
+
+ <script>
+
+</script>
 
 </html>
