@@ -1,3 +1,4 @@
+//CONTROLAR UN DISPOSITIVO
 function actualizar_disp(estado_sala,boton_sala) {
   formulario = document.forms['dispositivo'];
   id= formulario['id'].value;
@@ -29,7 +30,6 @@ function actualizar_disp(estado_sala,boton_sala) {
 
 };
 
-
 function mostrar_disp(formi){
   formulario= document.getElementById(formi.id);
   id_sala= formulario['id_sala'].value;
@@ -52,6 +52,94 @@ function mostrar_disp(formi){
   
 };
 
+
+//CONTROLAR TODOS LOS DISPOSITIVOS DE UN EDIFICIO
+
+function actualizar_disp_e(formi){
+  formulario= document.getElementById(formi.id);
+  id_edificio= formulario['id_edificio'].value;
+  elemento=formi.id;
+  if(elemento=="T_aire"){
+    valor_elemento=formulario['temp'].value;
+  }
+  else{
+    valor_elemento=formulario['valor'].value;    
+  }
+
+  var xmlhttp = new XMLHttpRequest();
+
+  xmlhttp.open("GET",
+    "ActualizarDispE.php?id_edificio="+id_edificio+"&elemento="+elemento+
+    "&valor_elemento="+valor_elemento,true);
+  xmlhttp.send();
+
+};
+
+function control_total_e(formi){
+  formulario= document.getElementById(formi.id);
+  id_edificio= formulario['id_edificio'].value;
+  edificio= formulario['edificio'].value;
+
+  var xmlhttp =  new XMLHttpRequest();
+  xmlhttp.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+      document.getElementById("popup").innerHTML = this.responseText;
+      window.location.href='#popup';
+    }
+  };
+  xmlhttp.open("GET","ControlTotalE.php?id_edificio="+id_edificio+"&edificio="+edificio,true);
+  xmlhttp.send();
+  
+};
+
+
+
+//CONTROLAR TODOS LOS DISPOSITIVOS DE UN PISO
+function actualizar_disp_p(formi){
+  formulario= document.getElementById(formi.id);
+  id_piso= formulario['id_piso'].value;
+  elemento=formi.id;
+
+  if(elemento=="T_aire"){
+    valor_elemento=formulario['temp'].value;
+  }
+  else{
+    valor_elemento=formulario['valor'].value;    
+  }
+  
+  var xmlhttp = new XMLHttpRequest();
+
+  xmlhttp.open("GET",
+    "ActualizarDispP.php?id_piso="+id_piso+"&elemento="+elemento+
+    "&valor_elemento="+valor_elemento,true);
+  xmlhttp.send();
+
+};
+
+function control_total_p(formi){
+  formulario= document.getElementById(formi.id);
+  id_piso= formulario['id_piso'].value;
+  piso= formulario['piso'].value;
+  p_edificio= formulario['p_edificio'].value;
+
+  var xmlhttp =  new XMLHttpRequest();
+  xmlhttp.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+      document.getElementById("popup").innerHTML = this.responseText;
+      window.location.href='#popup';
+    }
+  };
+  xmlhttp.open("GET","ControlTotalP.php?id_piso="+id_piso+"&piso="+piso+
+               "&edificio="+p_edificio,true);
+  xmlhttp.send();
+  
+};
+
+
+
+
+
+//FUNCIONES ESPECIFICAS
 
 function mostrar_estado_salas(estado,boton){
   if (document.getElementById(estado).value == "1"){
@@ -111,9 +199,25 @@ function mostrar_estados_dis(){
 
 };
 
+function cambiar_valor(formi){
+  formulario=document.getElementById(formi.id);
+  if(formulario['valor'].value==1){
+    formulario['valor'].value=0;
+  }
+  else{
+    formulario['valor'].value=1;
+  }
+  
+};
+
 
 function input_temp(){
   document.getElementById("text_temp").innerHTML = document.getElementById("temp").value;
+};
+
+function salir_popup_y_act(){
+  window.location.href='#';
+  location.reload();
 };
 
 
