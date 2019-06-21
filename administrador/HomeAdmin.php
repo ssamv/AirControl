@@ -1,6 +1,17 @@
 <?php
 session_start();
 require("../public/database.php");
+
+if(empty($_SESSION['user_inside'])){
+  echo "<script language='javascript'>window.location='/index.php'</script>";
+}
+else{
+  $user=$_SESSION['user_inside'];
+  $consulta_inicio= "SELECT * FROM Usuario WHERE Rut ='$user'";
+  $resultado= mysqli_query($link,$consulta_inicio) or die('Consulta fallida: ' . mysqli_error());
+  $usuario = mysqli_fetch_array($resultado);
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -29,7 +40,7 @@ require("../public/database.php");
     <header class="row">
       <div class="centrar-v col-xs-7">
         <img src="../img/usuario.png" text-align="center" width="75px"  alt="No se pudo cargar la imagen">
-        <?php echo $_SESSION['user_inside']; ?>   
+        <?php echo $usuario['Nombre']." ".$usuario['A_paterno']." ".$usuario['A_materno']; ?>   
       </div>
 
       <div class="col-xs-5" width="75px" style="text-align:right;">
@@ -44,8 +55,10 @@ require("../public/database.php");
   <h1>Panel de control del aire acondicionado de DUOC UC</h1> 
   </div>
 
-<!--EDIFICIOS--------------------------------------------------------------------------------------------->
+
 <?php
+
+
 /*OBTENIENDO EL CONTENIDO */
 $json_file = file_get_contents("http://api.openweathermap.org/data/2.5/weather?id=3871336&APPID=e4c06d9b2a5131bc59c95a42fb15dcd4");
 $vars = json_decode($json_file);
@@ -63,13 +76,24 @@ function temp_sala($temp,$tempc){
     return $d;
 }
 
+
+/*--EDIFICIOS--------------------------------------------------------------------------------------------->*/
 $consultaE= "SELECT * FROM Edificio";
 $edificios= mysqli_query($link,$consultaE) or die('Consulta fallida: ' . mysqli_error());
 while ($fila_e=mysqli_fetch_array($edificios)){
 ?>
 
+
   <article class="centrar edificio col-xs-11">
    <h2>Torre <?php echo $fila_e['descripcion']; ?></h2>
+   <form id="datos-edificio<?php echo $fila_e['id_edif']; ?>" method="POST">
+      <input type="hidden" id="id_edificio" name="id_edificio" value="<?php echo $fila_e['id_edif']; ?>">    
+      <input type="hidden" id="edificio" name="edificio" value="<?php echo $fila_e['descripcion']; ?>">
+
+      <input type="button" id="boton_control_e" class="btn btn-outline-primary" 
+             value="Control Total" onclick="control_total_e(this.form);">
+
+    </form>
    <div class="row">
 
 <!--PISOS--------------------------------------------------------------------------------------------->
@@ -84,6 +108,13 @@ while ($fila=mysqli_fetch_array($pisos)){
     <div class="row">
       <div class="centrar col-xs-12">
         <h3>Piso N°<?php echo $fila['descripcion']; ?></h3>
+        <form id="datos-piso<?php echo $fila['id_piso']; ?>" method="POST">
+          <input type="hidden" id="id_piso" name="id_piso" value="<?php echo $fila['id_piso']; ?>">
+          <input type="hidden" id="p_edificio" name="p_edificio" value="<?php echo $fila_e['descripcion']; ?>">    
+          <input type="hidden" id="piso" name="piso" value="<?php echo $fila['descripcion']; ?>">
+          <input type="button" id="boton_control_p" class="btn btn-outline-primary" 
+                value="Control Total" onclick="control_total_p(this.form);">
+       </form>
       </div>
 
 <!--SALAS--------------------------------------------------------------------------------------------->

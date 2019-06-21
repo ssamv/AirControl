@@ -12,18 +12,18 @@ else{
     <meta charset="utf-8">
     <title>Login</title>
     <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
-    <link rel="stylesheet" href="index.css"><!--Agregue esto-->
+    <link rel="stylesheet" href="index.css">
   </head>
 
   <body>
       <header>
       </header>
-    <h1>Air Control</h1> <!--Agregue esto-->
+    <h1>Air Control</h1>
     <h2>Login</h2>
       <form action="/public/autenticacion.php" method="post">
-        <input type="text" name="usuario" id="usaurio" placeholder= "Enter your user">
-        <input type="password" name="password" id="password" placeholder="Enter your password">
-        <input type="submit" value="Send">
+        <input type="number" name="usuario" id="usaurio" placeholder= "Ingrese su Rut sin puntos ni guión (12345678)" min="1000000" max="99999999">
+        <input type="password" name="password" id="password" placeholder="Ingrese su Contraseña">
+        <input type="submit" value="Ingresar">
       </form>
 
   </body>
