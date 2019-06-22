@@ -31,11 +31,14 @@ require("../public/database.php");
 
   <body>
 
-  <div class="col-xs-10 col-sm-8 col-md-6 col-lg-4" id="popupBody">
+  <div class="col-xs-10" id="popupBody">
     <div class="row centrar">
-
+    <button type="button" class="close topright" data-dismiss="modal" aria-label="Close" 
+                onclick="salir_popup_y_act();">
+          <span aria-hidden="true">&times;</span>
+        </button>
       <div class="col-xs-12">
-        <span class="btn btn-danger topright" onclick="salir_popup_y_act();">&times;</span>
+
         <p><h6>Torre <?php echo $edificio; ?></h6></p>
         <p><h3>Piso <?php echo $piso; ?></h3></p>
       </div>    

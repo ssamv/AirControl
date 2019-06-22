@@ -41,10 +41,13 @@ require("../public/database.php");
 
   <body>
 
-  <div class="col-xs-10 col-sm-8 col-md-6 col-lg-4" id="popupBody">
+  <div class="col-xs-10" id="popupBody">
     <div class="row">
+    <button type="button" class="close topright" data-dismiss="modal" aria-label="Close" 
+                onclick="actualizar_disp('<?php echo $estado_dis;?>','<?php echo $boton_sala;?>');">
+          <span aria-hidden="true">&times;</span>
+        </button>
       <div class="col-xs-12">
-        <span class="btn btn-danger topright" onclick="actualizar_disp('<?php echo $estado_dis;?>','<?php echo $boton_sala;?>');">&times;</span>
         <p><h6>Torre <?php echo $e_dis; ?>/ Piso N°<?php echo $p_dis; ?></h6></p>
         <h2>Sala: <?php echo $sala; ?></h2>
       </div>

@@ -21,8 +21,6 @@ function actualizar_disp(estado_sala,boton_sala) {
       xmlhttp.send();
    }
 
-   window.location.href = '#';
-   
    if (estado != document.getElementById(estado_sala).value){
           $(boton_sala).button('toggle');
           document.getElementById(estado_sala).value = estado;
@@ -41,8 +39,7 @@ function mostrar_disp(formi){
   var xmlhttp =  new XMLHttpRequest();
   xmlhttp.onreadystatechange = function() {
     if (this.readyState == 4 && this.status == 200) {
-      document.getElementById("popup").innerHTML = this.responseText;
-      window.location.href='#popup';
+      document.getElementById("modalpop").innerHTML = this.responseText;
       mostrar_estados_dis();
     }
   };
@@ -83,8 +80,7 @@ function control_total_e(formi){
   var xmlhttp =  new XMLHttpRequest();
   xmlhttp.onreadystatechange = function() {
     if (this.readyState == 4 && this.status == 200) {
-      document.getElementById("popup").innerHTML = this.responseText;
-      window.location.href='#popup';
+      document.getElementById("modalpop").innerHTML = this.responseText;
     }
   };
   xmlhttp.open("GET","ControlTotalE.php?id_edificio="+id_edificio+"&edificio="+edificio,true);
@@ -125,8 +121,7 @@ function control_total_p(formi){
   var xmlhttp =  new XMLHttpRequest();
   xmlhttp.onreadystatechange = function() {
     if (this.readyState == 4 && this.status == 200) {
-      document.getElementById("popup").innerHTML = this.responseText;
-      window.location.href='#popup';
+      document.getElementById("modalpop").innerHTML = this.responseText;
     }
   };
   xmlhttp.open("GET","ControlTotalP.php?id_piso="+id_piso+"&piso="+piso+
@@ -216,7 +211,6 @@ function input_temp(){
 };
 
 function salir_popup_y_act(){
-  window.location.href='#';
   location.reload();
 };
 

@@ -91,8 +91,8 @@ while ($fila_e=mysqli_fetch_array($edificios)){
       <input type="hidden" id="edificio" name="edificio" value="<?php echo $fila_e['descripcion']; ?>">
 
       <input type="button" id="boton_control_e" class="btn btn-outline-primary" 
+             data-toggle="modal" data-target="#modalpopup"
              value="Control Total" onclick="control_total_e(this.form);">
-
     </form>
    <div class="row">
 
@@ -104,15 +104,16 @@ $pisos= mysqli_query($link,$consulta) or die('Consulta fallida: ' . mysqli_error
 while ($fila=mysqli_fetch_array($pisos)){
 ?>
 
-  <div class="piso centrar col-xs-12 col-md-6 col-lg-4">
+  <div class="piso centrar-h col-xs-12 col-md-6 col-lg-4">
     <div class="row">
-      <div class="centrar col-xs-12">
+      <div class="centrar-h col-xs-12">
         <h3>Piso N°<?php echo $fila['descripcion']; ?></h3>
         <form id="datos-piso<?php echo $fila['id_piso']; ?>" method="POST">
           <input type="hidden" id="id_piso" name="id_piso" value="<?php echo $fila['id_piso']; ?>">
           <input type="hidden" id="p_edificio" name="p_edificio" value="<?php echo $fila_e['descripcion']; ?>">    
           <input type="hidden" id="piso" name="piso" value="<?php echo $fila['descripcion']; ?>">
-          <input type="button" id="boton_control_p" class="btn btn-outline-primary" 
+          <input type="button" id="boton_control_p" class="btn btn-outline-primary"
+                data-toggle="modal" data-target="#modalpopup"
                 value="Control Total" onclick="control_total_p(this.form);">
        </form>
       </div>
@@ -140,8 +141,9 @@ while ($fila_s=mysqli_fetch_array($salas)){
       <input type="hidden" id="e_dis" name="e_dis" value="<?php echo $fila_e['descripcion']; ?>">
       <input type="hidden" id="p_dis" name="p_dis" value="<?php echo $fila['descripcion']; ?>">
 
-      <input type="button" id="boton_mostrar_disp<?php echo $fila_s['id_sala']; ?>" class="btn btn-outline-info"
-      value="<?php echo $fila_s['descripcion']; echo "&nbsp;"; echo $temp_sala;?>°C" onclick="mostrar_disp(this.form);">
+      <input type="button" id="boton_mostrar_disp<?php echo $fila_s['id_sala']; ?>" 
+        class="btn btn-outline-info" data-toggle="modal" data-target="#modalpopup"
+        value="<?php echo $fila_s['descripcion']; echo "&nbsp;"; echo $temp_sala;?>°C" onclick="mostrar_disp(this.form);">
       
       <?php while ($dis=mysqli_fetch_array($dispositivo)){?>
       <input type="hidden" id="estado_dis<?php echo $fila_s['id_sala']; ?>" name="estado_dis" value="<?php echo $dis['Estado']; ?>">
@@ -166,8 +168,15 @@ echo "<script>mostrar_estado_salas('".$estado_dis."','".$boton_sala."');</script
   </article>
 <?php } ?>
 
-<!--POPUP DISPOSITIVO--------------------------------------------------------------------------------------------->
-  <div id="popup" class="overlay">       </div>
+<!--POPUP DISPOSITIVO---------------------------------------------------------------------------------------------
+  <div id="popup" class="overlay">       </div>   -->
+  
+  <div class="modal fade" id="modalpopup" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div id="modalpop" class="modal-content">
+      </div>
+    </div>
+  </div>
 
     </section>
 	

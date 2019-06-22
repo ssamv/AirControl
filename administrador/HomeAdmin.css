@@ -44,6 +44,7 @@ display : inline-flex;
   
 .piso{
     margin-top: 20px;
+    padding: 0%;
     display : inline-flex;
     border-radius: 10px;
     border: 2px solid #757575;
@@ -76,8 +77,6 @@ display : inline-flex;
 #popupBody{
 padding: 2%;
 border-radius: 15px;
-box-shadow: 0 0 5px #CCC;
-background: #FFF;
 position: relative;
 margin: 5% auto;
 transition: all 3s ease-in-out;
