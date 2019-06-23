@@ -1,0 +1,68 @@
+header{
+    font-family: arial;
+    background-color: rgb(16,39,62);
+    color: white;
+}
+
+.centrar{
+    text-align:center;
+    justify-content: center;
+    align-items: center;
+}
+
+.centrar-v{
+    justify-content: center;
+    align-items: center;
+}
+
+.sala{
+    margin-top: 20px;
+    display : inline-flex;
+    border-radius: 10px;
+    border: 2px solid #757575;
+}
+
+.overlay {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: rgba(0, 0, 0, 0.7);
+    transition: opacity 500ms;
+    visibility: hidden;
+    opacity: 0;
+}
+
+.overlay:target {
+    visibility: visible;
+    opacity: 1;
+}
+
+#popupBody{
+padding: 2%;
+border-radius: 15px;
+box-shadow: 0 0 5px #CCC;
+background: #FFF;
+position: relative;
+margin: 5% auto;
+transition: all 3s ease-in-out;
+}
+
+.diflex{
+display : inline-flex;
+}
+
+.topright {
+    position: absolute;
+    top: 8px;
+    right: 16px;
+    font-size: 18px;
+ }
+
+ .caja-dispositivo{
+    height: 200px;
+    padding: 7px;
+    border-radius: 10px;
+    border: 2px solid #757575;
+}
